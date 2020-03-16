@@ -99,3 +99,4 @@ dist
 .fusebox/
 
 package-lock.json
+uploads
