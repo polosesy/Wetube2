@@ -99,16 +99,17 @@ export const logout = (req, res) => {
 };
 
 export const getMe = (req, res) => {
-  res.render("usersDetail", { pageTitle: "Users Detail", user: req.user });
+  res.render("userDetail", { pageTitle: "Users Detail", user: req.user });
 };
 
-export const usersDetail = async (req, res) => {
+export const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id);
-    res.render("usersDetail", { pageTitle: "Users Detail", user });
+    const user = await User.findById(id).populate("videos");
+    console.log(user);
+    res.render("userDetail", { pageTitle: "Users Detail", user });
   } catch (error) {
     res.redirect(routes.home);
   }
