@@ -4,10 +4,11 @@ include mixins/videoPlayer
 block content
     .video-detail__container
         +videoPlayer({
-            src:video.fileUrl
+            src: video.fileUrl
         })
         .video__info
-            if loggedUser && video.creator.id === loggedUser.id
+            if id=null 
+            if loggedUser && (video.creator.id === loggedUser.id)
                 a(href=routes.editVideo(video.id))
                     button Edit video
             h5.video__title=video.title
@@ -17,20 +18,25 @@ block content
             else 
                 span.video__views #{video.views} views
             .video__author
-                |Uploaded by
+                |Uploaded by 
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
         .video__comments
             if video.comments.length === 1
                 span.video__comment-number
                     span#jsCommentNumber 1
-                    |   comment
+                    |  comment
             else
                 span.video__comment-number
                     span#jsCommentNumber=video.comments.length
-                    |   comments 
+                    |  comments
             form.add__comment#jsAddComment
-                input(type="text", placeholder="Add a comment", name="comment")
+                input(type="text", placeholder="Add a comment")
             ul.video__comments-list#jsCommentList
-                each comment in video.comments.reverse()
+                for comment in video.comments.reverse()
                     li
-                        span=comment.text 
+                        span.commentText=comment.text
+                        if loggedUser && (video.creator.id === loggedUser.id)
+                            form.commentBtnForm#jsCommentBtn
+                                button(type="submit")
+                                    i.fas.fa-trash 
+                                    
