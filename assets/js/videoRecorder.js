@@ -24,8 +24,7 @@ const stopRecording = () => {
 const startRecording = () => {
   videoRecorder = new MediaRecorder(streamObject);
   videoRecorder.start();
-  console.log(videoRecorder);
-  videoRecorder.addEventListener("dataavilable", handleVideoData);
+  videoRecorder.addEventListener("dataavailable", handleVideoData);
   recordBtn.addEventListener("click", stopRecording);
 };
 
@@ -33,10 +32,10 @@ const getVideo = async () => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
-      // video: { width: 1280, height: 720 }, 비디오 레코딩
+      video: { width: 1280, height: 720 },
     });
     videoPreview.srcObject = stream;
-    videoPreview.muted = true; // 비디오 레코딩시 음소거
+    videoPreview.muted = true;
     videoPreview.play();
     recordBtn.innerHTML = "Stop recording";
     streamObject = stream;
